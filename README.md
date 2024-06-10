@@ -1,5 +1,5 @@
 запуск программ:  
-``` cd {dir} && go run main.go
+``` cd {dir} && go run main.go```
 
 
 ### Устные вопросы
@@ -18,15 +18,15 @@
 
 5.Какой размер у структуры struct{}{}?
 0 байт  
-Пояснения:
-var x = make([]struct{}, 1000000000)
-var y [1000000000]struct{}
-a := struct{}{}
-var _uintptr uintptr
-var len int
-var cap int
-fmt.Println(unsafe.Sizeof(_uintptr), unsafe.Sizeof(len), unsafe.Sizeof(cap)) // 8 + 8 + 8 = 24 так как у меня 64-битная архитектура
-fmt.Println(unsafe.Sizeof(x), unsafe.Sizeof(a), unsafe.Sizeof(y)) // выведется 24 (размер структуры слайса) 0 0 
+Пояснения:  
+var x = make([]struct{}, 1000000000)  
+var y [1000000000]struct{}  
+a := struct{}{}  
+var _uintptr uintptr  
+var len int  
+var cap int  
+fmt.Println(unsafe.Sizeof(_uintptr), unsafe.Sizeof(len), unsafe.Sizeof(cap)) // 8 + 8 + 8 = 24 так как у меня 64-битная архитектура  
+fmt.Println(unsafe.Sizeof(x), unsafe.Sizeof(a), unsafe.Sizeof(y)) // выведется 24 (размер структуры слайса) 0 0   
 
 6.Есть ли в Go перегрузка методов или операторов?
 Нет
@@ -37,114 +37,114 @@ m[0]=1
 m[1]=124
 m[2]=281
 
-В случайно порядке (создатели языка специально добавили рандомизацию)
+В случайно порядке (создатели языка специально добавили рандомизацию)  
 
 8.В чем разница make и new?
-new(T) - аллоцирует память типа T нулевого значения данного типа указатель- nil. new([]int) вернет nil указатель структуру слайса (создает указатель на тип)
-make - инициализирует (слайс мапу канал), аллоцирует для данного типа память и (заполняет нулевым значением) заданной длины (len cap)
+new(T) - аллоцирует память типа T нулевого значения данного типа указатель- nil. new([]int) вернет nil указатель структуру слайса (создает указатель на тип)  
+make - инициализирует (слайс мапу канал), аллоцирует для данного типа память и (заполняет нулевым значением) заданной длины (len cap)  
 
 9.Сколько существует способов задать переменную типа slice или map?
 
-Slice: 12
-var s_ptr = &[]int{}          // *[]int
-var s0 = new([]int)           // *[]int
-var s1 []int                  // []int
-var s2 []int = []int{1, 2, 3} // []int
-s3 := append([]int{}, s1...)  // []int
-s3_1 := append(s1, 1)         // []int если cap слайса не недостаточно, то создастся новый массив
-s4 := make([]int, 0)          // []int
-var s4_1 = make([]int, 0)     // []int
-s5 := make([]int, 0, 10)      // []int
-var s5_1 = make([]int, 0, 10) // []int
-v := s2[0:] // []int создасться новая структура слайса
-Еще существует вариант создания через reflect.MakeSlice
-Map: 10 
-m1 := new(map[int]int)                 //*map[int]int
-m2 := map[int]int{}                    // map[int]int - nil map  (литерал карты)
-var m2_2 *map[int]int = &map[int]int{} // *map[int]int - nil map
-m3 := make(map[int]int)                        // map[int]int
-var m3_1 map[int]int = make(map[int]int)       // map[int]int
-m4 := make(map[int]int, 10)                    // map[int]int
-var m4_1 map[int]int = make(map[int]int, 10)   // map[int]int
-m5 := map[int]int{0: 0, 1: 1}                  // map[int]int (литерал карты)
-var m5_1 map[int]int = map[int]int{0: 0, 1: 1} // map[int]int (литерал карты)
-Еще существует вариант создания через reflect.MakeMap
+Slice: 12  
+var s_ptr = &[]int{}          // *[]int  
+var s0 = new([]int)           // *[]int  
+var s1 []int                  // []int  
+var s2 []int = []int{1, 2, 3} // []int  
+s3 := append([]int{}, s1...)  // []int  
+s3_1 := append(s1, 1)         // []int если cap слайса не недостаточно, то создастся новый массив  
+s4 := make([]int, 0)          // []int  
+var s4_1 = make([]int, 0)     // []int  
+s5 := make([]int, 0, 10)      // []int  
+var s5_1 = make([]int, 0, 10) // []int  
+v := s2[0:] // []int создасться новая структура слайса  
+Еще существует вариант создания через reflect.MakeSlice  
+Map: 10   
+m1 := new(map[int]int)                 //*map[int]int    
+m2 := map[int]int{}                    // map[int]int - nil map  (литерал карты)  
+var m2_2 *map[int]int = &map[int]int{} // *map[int]int - nil map  
+m3 := make(map[int]int)                        // map[int]int  
+var m3_1 map[int]int = make(map[int]int)       // map[int]int  
+m4 := make(map[int]int, 10)                    // map[int]int  
+var m4_1 map[int]int = make(map[int]int, 10)   // map[int]int  
+m5 := map[int]int{0: 0, 1: 1}                  // map[int]int (литерал карты)  
+var m5_1 map[int]int = map[int]int{0: 0, 1: 1} // map[int]int (литерал карты)  
+Еще существует вариант создания через reflect.MakeMap  
 
 
 10.Что выведет данная программа и почему?
-func update(p *int) {
-b := 2
-p = &b
-}
-func main() {
-var (
-a=1
-p = &a
-)
-fmt.Println(*p)
-update(p)
-fmt.Println(*p)
-}
+func update(p *int) {  
+b := 2  
+p = &b  
+}  
+func main() {  
+var (  
+a=1  
+p = &a  
+)  
+fmt.Println(*p)  
+update(p)  
+fmt.Println(*p)  
+}  
 
-Ответ
-1
-1
-Потому что при передаче p в функцию произойдет копирование указателя, в p = &b присваивается адрес переменной b но уже скопированному указателю (локальному функции). Чтобы модифицировать в вызывающем пространстве указатель p нужно разименовать p чтобы записать в память куда указывает p (&a)
+Ответ  
+1  
+1  
+Потому что при передаче p в функцию произойдет копирование указателя, в p = &b присваивается адрес переменной b но уже скопированному указателю (локальному функции). Чтобы модифицировать в вызывающем пространстве указатель p нужно разименовать p чтобы записать в память куда указывает p (&a)  
+  
+11.  
+Что выведет данная программа и почему?  
+func main() {  
+wg := sync.WaitGroup{}  
+for i := 0; i < 5; i++ {  
+wg.Add(1)  
+go func(wg sync.WaitGroup, i int) {  
+fmt.Println(i)  
+wg.Done()  
+}(wg, i)  
+}  
+wg.Wait()  
+fmt.Println("exit")  
+}  
 
-11.
-Что выведет данная программа и почему?
-func main() {
-wg := sync.WaitGroup{}
-for i := 0; i < 5; i++ {
-wg.Add(1)
-go func(wg sync.WaitGroup, i int) {
-fmt.Println(i)
-wg.Done()
-}(wg, i)
-}
-wg.Wait()
-fmt.Println("exit")
-}
+Ответ: Выведутся значения от 0 до 4 до случайном порядке, и ошибка fatal error: all goroutines are asleep - deadlock!  
+Так как при передаче создается копия wg, необходимо передавать указатель.  
 
-Ответ: Выведутся значения от 0 до 4 до случайном порядке, и ошибка fatal error: all goroutines are asleep - deadlock!
-Так как при передаче создается копия wg, необходимо передавать указатель.
+12.  
+Что выведет данная программа и почему?  
+func main() {  
+n := 0  
+if true {n := 1  
+n++  
+}  
+fmt.Println(n)  
+}  
 
-12.
-Что выведет данная программа и почему?
-func main() {
-n := 0
-if true {n := 1
-n++
-}
-fmt.Println(n)
-}
+Ответ: Вывод будет 0. Так как в условии if переопределяется переменная n и имеет свою локальную область видимости.  
 
-Ответ: Вывод будет 0. Так как в условии if переопределяется переменная n и имеет свою локальную область видимости.
-
-13. Что выведет данная программа и почему?
-func someAction(v []int8, b int8) {
-v[0] = 100
-v = append(v, b)
-}
-func main() {
-var a = []int8{1, 2, 3, 4, 5}
-someAction(a, 6)
-fmt.Println(a)
-}
-
-Ответ: Вывод [100 2 3 4 5], так как в функцию передается слайс по значению, то структура 'a' копируется (поля SliceHeader-Data(uintptr) Len, Cap(int) остаются теже, но у 'v' уже другой адрес в памяти, при изменении 0 элемента (v[0] = 100) изменения происходят потому что v и a имеют ссылку(указатель) на один и тот-же массив, но при добавлении append массив расширится, len и cap увеличатся, так как в данном примере cap недостаточно для добавления еще 1 элемента (создается len = 5, cap = 5) создастся новый массив, указатель у базового массива не поменяется, но 'v' будет указатель на новый массив. Стоит отметить, что при достаточном cap, в базовый массив попадает новый добавленый элемент через append, но так как len у базового массива не менялось потребуется обратиться как a[:len(a)+1] чтобы увидеть в fmt.Print что массив изменился)
-
-14.
-Что выведет данная программа и почему?
-func main() {
-slice := []string{"a", "a"}
-func(slice []string) {
-slice = append(slice, "a")
-slice[0] = "b"
-slice[1] = "b"
-fmt.Print(slice)
-}(slice)
-fmt.Print(slice)
+13. Что выведет данная программа и почему?  
+func someAction(v []int8, b int8) {  
+v[0] = 100  
+v = append(v, b)  
+}  
+func main() {  
+var a = []int8{1, 2, 3, 4, 5}  
+someAction(a, 6)  
+fmt.Println(a)  
 }
 
-Ответ: Вывод [b b a][a a], так как в замыкаение передается слайс, у него своя область видимости
+Ответ: Вывод [100 2 3 4 5], так как в функцию передается слайс по значению, то структура 'a' копируется (поля SliceHeader-Data(uintptr) Len, Cap(int) остаются теже, но у 'v' уже другой адрес в памяти, при изменении 0 элемента (v[0] = 100) изменения происходят потому что v и a имеют ссылку(указатель) на один и тот-же массив, но при добавлении append массив расширится, len и cap увеличатся, так как в данном примере cap недостаточно для добавления еще 1 элемента (создается len = 5, cap = 5) создастся новый массив, указатель у базового массива не поменяется, но 'v' будет указатель на новый массив. Стоит отметить, что при достаточном cap, в базовый массив попадает новый добавленый элемент через append, но так как len у базового массива не менялось потребуется обратиться как a[:len(a)+1] чтобы увидеть в fmt.Print что массив изменился)  
+
+14.  
+Что выведет данная программа и почему?  
+func main() {  
+slice := []string{"a", "a"}  
+func(slice []string) {  
+slice = append(slice, "a")  
+slice[0] = "b"  
+slice[1] = "b"  
+fmt.Print(slice)  
+}(slice)  
+fmt.Print(slice)  
+}  
+
+Ответ: Вывод [b b a][a a], так как в замыкаение передается слайс, у него своя область видимости  
